@@ -1,2 +1,2 @@
-# turntable
-Android端抽奖转盘
+# VViewPager
+Android上下滚动ViewPager
