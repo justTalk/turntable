@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.globalCompileSdkVersion
+    buildToolsVersion rootProject.ext.globalBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.globalMinSdkVersion
+        targetSdkVersion rootProject.ext.globalTargetSdkVersion
+        versionCode rootProject.ext.globaVersionCode
+        versionName rootProject.ext.globaVersionName
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api 'com.squareup.okhttp3:okhttp:3.6.0'
+    api "com.squareup.retrofit2:retrofit:2.2.0"
+    api "com.squareup.retrofit2:converter-gson:2.2.0"
+    api "com.squareup.retrofit2:adapter-rxjava2:2.2.0"
+    api "io.reactivex.rxjava2:rxandroid:2.0.1"
+    api 'org.greenrobot:eventbus:3.1.0-RC'
+}
