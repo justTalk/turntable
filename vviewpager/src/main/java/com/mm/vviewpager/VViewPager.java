@@ -11,7 +11,6 @@ import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -35,7 +34,6 @@ import java.util.Comparator;
  * email: mingming.liu@quvideo.com
  */
 public class VViewPager extends ViewGroup {
-
 
     private static final int MAX_SCROLL_Y = 2 << 23;
     private static final boolean USE_CACHE = false;
@@ -1972,9 +1970,9 @@ public class VViewPager extends ViewGroup {
     private int determineTargetPage(int currentPage, float pageOffset, int velocity, int deltaY) {
         int targetPage;
         if (Math.abs(deltaY) > mFlingDistance && Math.abs(velocity) > mMinimumVelocity) {
-            targetPage = currentPage - (velocity < 0 ? mTopIncr : 0);
+            targetPage = currentPage - (velocity < 0 ? 0 : mTopIncr);
         } else {
-            final float truncator = currentPage >= mCurItem ? 0.4f : 0.6f;
+            final float truncator = currentPage >= mCurItem ? 0.66f : 0.33f;
             targetPage = (int) (currentPage - mTopIncr * (pageOffset + truncator));
         }
 
@@ -1985,7 +1983,10 @@ public class VViewPager extends ViewGroup {
             // Only let the user target pages we have items for
             targetPage = constrain(targetPage, firstItem.position, lastItem.position);
         }
-
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, " mFlingDistance is " + mFlingDistance + " deltaY is " + deltaY + " mMinimumVelocity is " + mMinimumVelocity + " velocity is " + velocity);
+            Log.d(TAG, "nextPage is " + targetPage + " currentPage is " + currentPage + " mCurItem is " + mCurItem +" pageOffset is " + pageOffset);
+        }
         return targetPage;
     }
 
